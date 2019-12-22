@@ -11,6 +11,19 @@
       <link rel="stylesheet" href="{{relative 'public/core.css'}}" />
       <link rel="stylesheet" href="{{relative 'public/theme.css'}}" />
       <link rel="stylesheet" href="{{relative 'public/justifiedgallery/justifiedGallery.min.css'}}" />
+
+      <!-- Hack the video player to use same sizing as the images, but with a max width/height -->
+      <style>
+        .lg-outer .lg-video-cont {
+          max-width: 960px; /* that is, 1920/2 */
+          height: 100vh !important;
+          max-height: 960px;
+        }
+        .lg-outer .lg-video {
+          height: 100%;
+          padding-bottom: initial !important;
+        }
+      </style>
   </head>
 
   <body>
