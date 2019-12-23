@@ -46,6 +46,7 @@
 
     <script>
       $(document).ready(function() {
+        // https://sachinchoolur.github.io/lightGallery/docs/api.html
         $("#media").lightGallery({
           thumbWidth: 80,
           controls: true,
@@ -55,6 +56,7 @@
           videojs: true,
           showThumbByDefault: false,
           exThumbImage: 'data-exthumbimage',
+          videojsOptions: {}, // https://docs.videojs.com/tutorial-options.html#autoplay
         });
 
         // At the time of writing, I haven't found a way to get autoplay to work:
