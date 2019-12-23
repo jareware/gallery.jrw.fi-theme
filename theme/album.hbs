@@ -57,6 +57,25 @@
           exThumbImage: 'data-exthumbimage',
         });
 
+        // At the time of writing, I haven't found a way to get autoplay to work:
+        // https://github.com/thumbsup/thumbsup/issues/186
+        // ...and hooking it up to slide change with something like:
+        // $("#media").on('onAfterSlide.lg', function...)
+        // ...seems to cause issues sometimes with videos playing in the background.
+        // Thus, we just add a bit of convenience:
+        $(document).on('keypress', function(event) {
+          if (event.keyCode !== 32) return; // not the space bar -> ignore
+          if ($(event.target).closest('.vjs-control-bar').length) return; // keypress from within the video player controls themselves -> ignore
+          $('.lg-current .vjs-big-play-button').click(); // simulate click on the play button of the current video
+        })
+
+        // After navigating away from a video, it will continue to exist off-screen, and may be still focused,
+        // if the navigation took place with the arrow keys, for example. Thus, we blur whatever's currently
+        // focused, so we don't accidentally let keypresses etc go into an off-screen video.
+        $("#media").on('onBeforeSlide.lg', function() {
+          $(document.activeElement).blur();
+        })
+
         // Init justified gallery for albums
         $("#albums").justifiedGallery({
           {{!-- selector: '.albumList', --}}
