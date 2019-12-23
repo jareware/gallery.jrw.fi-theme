@@ -79,6 +79,22 @@
           $(document.activeElement).blur();
         })
 
+        // Generate an exiftool command for setting the title when "T" is pressed
+        $(document).on('keypress', function(event) {
+          if (event.keyCode !== 116) return; // not the "T" key -> ignore
+          const currentSrc = $('.lg-current').find('img.lg-image, .lg-video video').attr('src');
+          if (!currentSrc) return alert('Error: Unable to determine source file');
+          const $media = $('#media > *[data-download-url="' + currentSrc + '"]');
+          const currentTitle = $media.attr('data-sub-html') || '';
+          const newTitle = prompt('New title for this file:', currentTitle);
+          if (newTitle === null) return; // prompt cancelled by user -> abort
+          if (newTitle === currentTitle) return; // no change -> abort
+          const cmdTitle = newTitle.replace(/"/g, '\\"');
+          const cmdFile = $media.data('filename');
+          const cmd = `exiftool -overwrite_original -Title="${cmdTitle}" "${cmdFile}"`;
+          alert(cmd);
+        })
+
         // Init justified gallery for albums
         $("#albums").justifiedGallery({
           {{!-- selector: '.albumList', --}}
