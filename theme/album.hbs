@@ -79,19 +79,20 @@
           $(document.activeElement).blur();
         })
 
-        // Generate an exiftool command for setting the title when "T" is pressed
+        // Generate an exiftool command for setting the description when "D" is pressed
+        // https://www.iptc.org/std/photometadata/specification/IPTC-PhotoMetadata#description
         $(document).on('keypress', function(event) {
-          if (event.keyCode !== 116) return; // not the "T" key -> ignore
+          if (event.keyCode !== 100) return; // not the "D" key -> ignore
           const currentSrc = $('.lg-current').find('img.lg-image, .lg-video video').attr('src');
           if (!currentSrc) return alert('Error: Unable to determine source file');
           const $media = $('#media > *[data-download-url="' + currentSrc + '"]');
-          const currentTitle = $media.attr('data-sub-html') || '';
-          const newTitle = prompt('New title for this file:', currentTitle);
-          if (newTitle === null) return; // prompt cancelled by user -> abort
-          if (newTitle === currentTitle) return; // no change -> abort
-          const cmdTitle = newTitle.replace(/"/g, '\\"');
+          const currentDesc = $media.attr('data-sub-html') || '';
+          const newDesc = prompt('New description for this file:', currentDesc);
+          if (newDesc === null) return; // prompt cancelled by user -> abort
+          if (newDesc === currentDesc) return; // no change -> abort
+          const cmdDesc = newDesc.replace(/"/g, '\\"');
           const cmdFile = $media.data('filename');
-          const cmd = `exiftool -overwrite_original -Title="${cmdTitle}" "${cmdFile}"`;
+          const cmd = `exiftool -overwrite_original -Description="${cmdDesc}" "${cmdFile}"`;
           alert(cmd);
         })
 
