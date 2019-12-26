@@ -93,7 +93,9 @@
           const cmdDesc = newDesc.replace(/"/g, '\\"');
           const cmdFile = $media.data('filename');
           const cmd = `exiftool -overwrite_original -Description="${cmdDesc}" "${cmdFile}"`;
-          alert(cmd);
+          $media.attr('data-sub-html', newDesc); // update the description in the DOM, so it shows correctly when re-navigating to this file
+          $('.lg-sub-html').text(newDesc).removeClass('lg-empty-html'); // update the description in the title bar, so we can see the latest one right away
+          localStorage.commands = (localStorage.commands || '') + '\n' + cmd;
         })
 
         // Init justified gallery for albums
