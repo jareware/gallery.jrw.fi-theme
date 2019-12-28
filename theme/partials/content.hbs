@@ -11,12 +11,15 @@
   <!--
     Breadcrumbs of parent albums
   -->
-  <nav class="breadcrumbs">
-    {{#each breadcrumbs~}}
-      <a class="breadcrumb-item" href="{{relative url}}">{{title}}</a>&nbsp;/&nbsp;
-    {{~/each~}}
-    <a class="breadcrumb-item" href="{{relative album.url}}">{{album.title}}</a>
-  </nav>
+  {{#if breadcrumbs}}
+    {{!-- Only render the elements for the breadcrumbs if there are any to display (i.e. nested galleries) --}}
+    <nav class="breadcrumbs">
+      {{#each breadcrumbs~}}
+        <a class="breadcrumb-item" href="{{relative url}}">{{title}}</a>&nbsp;/&nbsp;
+      {{~/each~}}
+      <a class="breadcrumb-item" href="{{relative album.url}}">{{album.title}}</a>
+    </nav>
+  {{/if}}
 
   <!--
     Nested albums, if any
