@@ -95,7 +95,22 @@
           const cmd = `exiftool -overwrite_original -Description="${cmdDesc}" "${cmdFile}"`;
           $media.attr('data-sub-html', newDesc); // update the description in the DOM, so it shows correctly when re-navigating to this file
           $('.lg-sub-html').text(newDesc).removeClass('lg-empty-html'); // update the description in the title bar, so we can see the latest one right away
-          localStorage.commands = (localStorage.commands || '') + '\n' + cmd;
+          localStorage.commands = (localStorage.commands || '') + cmd + '\n';
+        })
+
+        // Copy the currently pending commands when "C" is pressed
+        $(document).on('keypress', function(event) {
+          if (event.keyCode !== 99) return; // not the "C" key -> ignore
+          const cmds = localStorage.commands || '';
+          console.log(`Currently pending commands are:\n${cmds || 'n/a'}`);
+          if (!cmds) return alert('No commands waiting to be copied to clipboard');
+          Promise.resolve()
+            .then(() => navigator.clipboard.writeText(cmds))
+            .then(() => {
+              if (!confirm(`${cmds.split('\n').length - 1} commands copied to clipboard!\n\nErase command storage?`)) return;
+              localStorage.commands = '';
+            })
+            .catch(err => alert(`Error: Copying commands to clipboard failed: ${err}`))
         })
 
         // Init justified gallery for albums
