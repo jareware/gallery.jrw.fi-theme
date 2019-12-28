@@ -4,10 +4,13 @@
   <!--
     Gallery title
   -->
-  <header style="padding: 0 10px">
-    {{!-- Align the contents of the header with the justified-gallery default gutters of 10px --}}
-    <h1><a href="{{relative gallery.home.url}}">{{gallery.title}}</a></h1>
-  </header>
+  {{#if gallery.title}}
+  {{!-- Only render the elements if they are to have content, to not have them affect layout unnecessarily --}}
+    <header style="padding: 0 10px">
+      {{!-- Align the contents of the header with the justified-gallery default gutters of 10px --}}
+      <h1><a href="{{relative gallery.home.url}}">{{gallery.title}}</a></h1>
+    </header>
+  {{/if}}
 
   <!--
     Breadcrumbs of parent albums
