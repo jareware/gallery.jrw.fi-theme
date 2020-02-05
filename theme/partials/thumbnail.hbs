@@ -16,6 +16,7 @@
     data-filename="{{filename}}"
 
     {{#if meta.exif}}
+        {{!-- Docs at: https://github.com/amcolash/lg-exif --}}
         data-datetimeoriginal="{{meta.exif.DateTimeOriginal}}"
         data-fnumber="{{meta.exif.FNumber}}"
         data-exposuretime="{{meta.exif.ExposureTime}}"
